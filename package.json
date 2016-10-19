@@ -1,0 +1,55 @@
+{
+    "name": "ctypes-actual",
+    "exportedEnvVars": {
+        "FINDLIB": {
+            "global": true,
+            "resolveAsRelativePath": true,
+            "globalCollisionBehavior": "joinPath",
+            "val": "./_build/ocamlfind/lib"
+        },
+        "ctypes_version": {
+            "global": true,
+            "globalCollisionBehavior": "clobber",
+            "val": "0.9.2"
+        },
+        "ctypes_enable": {
+            "global": true,
+            "globalCollisionBehavior": "clobber",
+            "val": "enable"
+        },
+        "version": {
+            "global": true,
+            "globalCollisionBehavior": "clobber",
+            "val": "0.9.2"
+        },
+        "ctypes_installed": {
+            "global": true,
+            "globalCollisionBehavior": "clobber",
+            "val": "true"
+        },
+        "PATH": {
+            "global": true,
+            "resolveAsRelativePath": true,
+            "globalCollisionBehavior": "joinPath",
+            "val": "./_build/ocamlfind/bin"
+        }
+    },
+    "version": "0.9.2",
+    "dependencies": {
+        "@opam-alpha/ounit": "*",
+        "@opam-alpha/ctypes-foreign": "*",
+        "@opam-alpha/ocamlfind": "*",
+        "dependency-env": "https://github.com/npm-ml/dependency-env.git",
+        "substs": "https://github.com/yunxing/substs.git",
+        "nopam": "https://github.com/yunxing/nopam.git",
+        "@opam-alpha/lwt": "*",
+        "@opam-alpha/conf-pkg-config": "*",
+        "opam-installer-bin": "https://github.com/yunxing/opam-installer-bin.git"
+    },
+    "scripts": {
+        "postinstall": "eval $(dependencyEnv) && nopam && make XEN=${mirage_xen_enable:-disable} libffi.config && touch libffi.config && make XEN=${mirage_xen_enable:-disable} ctypes-base ctypes-stubs && make XEN=${mirage_xen_enable:-disable} ctypes-foreign && make install XEN=${mirage_xen_enable:-disable} && (opam-installer --prefix=$opam_prefix || true)"
+    },
+    "peerDependencies": {
+        "@opam-alpha/ocaml": ">= 4.01.0"
+    }
+}
